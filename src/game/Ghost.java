@@ -17,16 +17,16 @@ import java.util.Random;
 
 public class Ghost {
     
-    public static int ghostRadius = 15;
-    public static int square = 2*ghostRadius;
-    public static int speed = 30;
+    public int ghostRadius = 15;
+    public int square = 2*ghostRadius;
+    public int speed = 30;
     Direction givenDirection = Direction.up;
     
     
    
 
-    public static int columns = Ball.grid.length;
-    public static int rows = Ball.grid[0].length;
+    public int columns = Ball.grid.length;
+    public int rows = Ball.grid[0].length;
     
     
    

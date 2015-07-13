@@ -42,7 +42,8 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         ball = new Ball ((Ball.columns - 15)*Ball.square ,(Ball.rows -8)*Ball.square);  // set the ball object and its position on the display     
         
         food = new Food(); // wez skumaj co ty tu robisz
-        ghost = new Ghost((Ghost.columns - 14)*Ghost.square ,(Ghost.rows -17)*Ghost.square);
+//        //        ghost = new Ghost((Ghost.columns - 14)*Ghost.square ,(Ghost.rows -17)*Ghost.square);
+//        ghost = new Ghost(300, 300);
         
         //ball_1 = new Ball (400,400); // set second ball object and its position
         time = new Timer(200, this); // (interval ( in miliseconds), ActionListener) - becacuse I implemented
@@ -89,7 +90,7 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         food.paint(graphics);
 
         graphics.setColor(Color.MAGENTA);
-        ghost.paint(graphics);
+//        ghost.paint(graphics);
 
 
         
@@ -114,10 +115,10 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
 
         ball.update(); 
         food.update();
-        if (Ghost.columns == Ball.columns && Ghost.rows == Ball.rows) { // checking if ball is at the same position as ghost
-            gameOver();
-        }
-        ghost.update();
+//        if (Ghost.columns == Ball.columns && Ghost.rows == Ball.rows) { // checking if ball is at the same position as ghost
+//            gameOver();
+//        }
+//        ghost.update();
 
 
     }
