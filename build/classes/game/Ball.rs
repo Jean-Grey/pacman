@@ -1,0 +1,2 @@
+game.Direction
+game.Ball
