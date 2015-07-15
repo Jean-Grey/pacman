@@ -96,12 +96,11 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         ghost.paint(graphics);
         
         // also check:
+        // Display.java - line 106
         // Food.java - line 62
-
-        // Display.java - line 188
         displayStats(graphics);
 
-
+        // still need to fix adding points where game is over... :(
     }
 
     public void displayStats(Graphics g) {
@@ -184,10 +183,7 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     public void gameOver(){
         
         time.stop();
-        
-        // fix for points being updated after game is over
-        Display.points -= (10 * Display.level);
-        
+       
         JDialog.setDefaultLookAndFeelDecorated(true);
         int response = JOptionPane.showConfirmDialog(null, "Your score is:\n" + "score\n" + "Do you want to try again?", "Game Over",
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
