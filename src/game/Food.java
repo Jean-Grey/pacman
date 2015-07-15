@@ -59,6 +59,8 @@ public class Food {
             {
                 foodGrid[Ball.columns/Ball.square][Ball.rows/Ball.square]= false;
                 
+                Display.points += 10 * (Display.level);
+                
                 if (isFoodGridEmpty()) {
                     isAllFoodEaten = true;
                 }
@@ -84,10 +86,7 @@ public class Food {
             return isAllFalse;
        
         } 
-        
 
-        
-        
         public void food()
         { 
             for(int i = 0; i < foodGrid.length; i++ ) //feeling thr array

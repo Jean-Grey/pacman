@@ -18,7 +18,7 @@ import java.awt.event.KeyEvent; // to get the input from keyboard, it detects wh
 //import java.awt.event.MouseEvent; // the same as keyboard event\
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
-
+import java.awt.Font;
 
 /**
  *
@@ -32,12 +32,16 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     Food food;
     Ghost ghost;
     
+    public static int level;
+    public static int points;
+    
     
     
     
     public Display()
     {
-
+        level = 1;
+        points = 0;
         this.setPreferredSize(new Dimension(Ball.columns *Ball.square , Ball.rows * Ball.square)); // set the window size
         ball = new Ball ((Ball.columns - 15)*Ball.square ,(Ball.rows -8)*Ball.square);  // set the ball object and its position on the display     
         
@@ -90,16 +94,38 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
 
         graphics.setColor(Color.MAGENTA);
         ghost.paint(graphics);
-
-
         
+        // also check:
+        // Food.java - line 62
 
+        // Display.java - line 188
+        displayStats(graphics);
+
+
+    }
+
+    public void displayStats(Graphics g) {
+ 
+        //Save current colour
+        Color c = g.getColor();
         
+        // set new colour for stats
+        g.setColor(Color.WHITE);
+        
+        // set font face, and size
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 24));
+        
+        // draw stats
+        g.drawString("Points:", 30, 300);   
+        g.drawString(Integer.toString(points), 30, 330);
+        g.drawString("Level", 30, 380);
+        g.drawString(Integer.toString(level), 30, 410);
+        
+        // after drawing stats bring back previous colour
+        g.setColor(c);
     }
     public void actionPerformed(ActionEvent evt)
     {
-                
-        
         if(Food.isAllFoodEaten){
             gameOver();
         }
@@ -158,6 +184,9 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     public void gameOver(){
         
         time.stop();
+        
+        // fix for points being updated after game is over
+        Display.points -= (10 * Display.level);
         
         JDialog.setDefaultLookAndFeelDecorated(true);
         int response = JOptionPane.showConfirmDialog(null, "Your score is:\n" + "score\n" + "Do you want to try again?", "Game Over",
