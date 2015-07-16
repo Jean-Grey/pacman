@@ -34,6 +34,7 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     
     public static int level;
     public static int points;
+    public static int lives;
     
     
     
@@ -42,6 +43,7 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     {
         level = 1;
         points = 0;
+        lives = 3;
         this.setPreferredSize(new Dimension(Ball.columns *Ball.square , Ball.rows * Ball.square)); // set the window size
         ball = new Ball ((Ball.columns - 15)*Ball.square ,(Ball.rows -8)*Ball.square);  // set the ball object and its position on the display     
         
@@ -56,10 +58,10 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         this.addKeyListener(this);
         //this.addMouseListener(this);
         
-        
-        
     }
-
+    
+    
+    @Override
     public void paint(Graphics graphics)
     {
 
@@ -100,7 +102,7 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         // Food.java - line 62
         displayStats(graphics);
 
-        // still need to fix adding points where game is over... :(
+       
     }
 
     public void displayStats(Graphics g) {
@@ -117,12 +119,15 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
         // draw stats
         g.drawString("Points:", 30, 300);   
         g.drawString(Integer.toString(points), 30, 330);
-        g.drawString("Level", 30, 380);
+        g.drawString("Level:", 30, 380);
         g.drawString(Integer.toString(level), 30, 410);
+        g.drawString("Lives:", 30, 460);
+        g.drawString(Integer.toString(lives), 30, 490);
         
         // after drawing stats bring back previous colour
         g.setColor(c);
     }
+    @Override
     public void actionPerformed(ActionEvent evt)
     {
         if(Food.isAllFoodEaten){
@@ -136,25 +141,39 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     }
     public void update()
     {
-
         ball.update(); 
         food.update();
+
         if (Ghost.columns == Ball.columns && Ghost.rows == Ball.rows) { // checking if ball is at the same position as ghost
-            gameOver();
+            if(lives > 0){
+                die();
+                
+                
+                
+                //ale gra zaczyna sie od nowa - i jeszcze nie wiem jak
+            }
+            else{
+            gameOver();                 
+            }
+
         }
         ghost.update();
+  
 
 
     }
+    @Override
     public void keyReleased(KeyEvent evt)
     {
         
     }
+    @Override
     public void keyPressed(KeyEvent evt)
     {
           ball.setDirection(evt);
  
     }
+    @Override
     public void keyTyped(KeyEvent evt)
     {
         
@@ -180,16 +199,42 @@ public class Display extends JPanel implements ActionListener, KeyListener //Mou
     {
         
     }*/
+    public void die(){
+        
+        time.stop();
+        lives -= 1;
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, "You died\n Continue?", "You died",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+          System.out.println("No button clicked");
+        } else if (response == JOptionPane.YES_OPTION) {
+            
+            time.start();
+
+        
+            
+            
+           
+          
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+          System.out.println("JOptionPane closed");
+        }
+    }
+    
+    
+    
     public void gameOver(){
         
         time.stop();
        
         JDialog.setDefaultLookAndFeelDecorated(true);
-        int response = JOptionPane.showConfirmDialog(null, "Your score is:\n" + "score\n" + "Do you want to try again?", "Game Over",
+        int response = JOptionPane.showConfirmDialog(null, "Your score is:\n" + points + "\n" + "Do you want to try again?", "Game Over",
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
           System.out.println("No button clicked");
         } else if (response == JOptionPane.YES_OPTION) {
+            new Game();
            
           
         } else if (response == JOptionPane.CLOSED_OPTION) {
